@@ -17,8 +17,6 @@ namespace LambdaSampleFlowApplication
 {
     public class Startup
     {
-        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -58,8 +56,7 @@ namespace LambdaSampleFlowApplication
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers()
-                         .RequireCors(MyAllowSpecificOrigins);
+                endpoints.MapControllers();
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Welcome to running ASP.NET Core on AWS Lambda");

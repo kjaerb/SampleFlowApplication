@@ -11,7 +11,6 @@ namespace WebApiNovo.Controllers
 {
     [ApiController]
     [Route("api/teams")]
-    
     public class TeamWebController : ControllerBase
     {
         private readonly ITeamRepository _teamRepository;
