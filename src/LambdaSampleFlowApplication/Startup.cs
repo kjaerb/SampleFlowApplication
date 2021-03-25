@@ -17,10 +17,13 @@ namespace LambdaSampleFlowApplication
 {
     public class Startup
     {
+        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
+
 
         public static IConfiguration Configuration { get; private set; }
 
@@ -31,6 +34,12 @@ namespace LambdaSampleFlowApplication
             services.AddScoped<ISecurityDepRepository, StubSecurityDepRepository>();
             services.AddScoped<ISourceDepRepository, StubSourceDepRepository>();
             services.AddControllers();
+            services.AddCors(c => 
+                            {
+                                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+                            });
+
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -44,17 +53,19 @@ namespace LambdaSampleFlowApplication
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(options => options.AllowAnyOrigin());
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers()
+                         .RequireCors(MyAllowSpecificOrigins);
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Welcome to running ASP.NET Core on AWS Lambda");
                 });
             });
+            
         }
     }
 }
