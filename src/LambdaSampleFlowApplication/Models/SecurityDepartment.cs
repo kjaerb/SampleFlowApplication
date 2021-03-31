@@ -21,7 +21,8 @@ public class SecurityDepartment
         return new List<SecurityDepartment> {
             new SecurityDepartment { name = "4355", teams = Team.stubs()},
             new SecurityDepartment { name = "1337", teams = Team.stubs()},
-            new SecurityDepartment { name = "0420", teams = Team.stubs()}
+            new SecurityDepartment { name = "0420", teams = Team.stubs()},
+            new SecurityDepartment { name = "007", teams = Team.stubs10()}
         };
     }
 
